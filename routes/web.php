@@ -16,3 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('admin.dashboard'); // Load the dashboard view
+});
+
+Route::get('/tasks', function () {
+    return view('admin.tasks'); // Load the tasks management view
+});
+
+Route::get('/users', function () {
+    return view('admin.users'); // Load the tasks management view
+});
