@@ -9,28 +9,56 @@ use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
+    // public function index(Request $request)
+    // {
+    //     // Retrieve priority filter if provided
+    //     $priority = $request->query('priority'); 
+        
+    //     // Retrieve sort direction for due_date
+    //     $sortDirection = $request->query('sort', 'asc'); 
+        
+    //     // Query tasks with optional filtering and sorting
+    //     $tasks = Task::when($priority, function ($query, $priority) {
+    //             return $query->where('priority', $priority);
+    //         })
+    //         ->orderBy('due_date', $sortDirection)
+    //         ->get();
+        
+    //     // Return JSON response
+    //     return response()->json([
+    //         'success' => true,
+    //         'data' => $tasks,
+    //     ]);
+    // }
     public function index(Request $request)
     {
+        $perPage = $request->query('per_page', 5); // Default to 10 items per page
+        $page = $request->query('page', 1); // Default to page 1
+        
         // Retrieve priority filter if provided
         $priority = $request->query('priority'); 
         
         // Retrieve sort direction for due_date
         $sortDirection = $request->query('sort', 'asc'); 
         
-        // Query tasks with optional filtering and sorting
+        // Query tasks with optional filtering and sorting, using pagination
         $tasks = Task::when($priority, function ($query, $priority) {
-                return $query->where('priority', $priority);
-            })
-            ->orderBy('due_date', $sortDirection)
-            ->get();
+                    return $query->where('priority', $priority);
+                })
+                ->orderBy('due_date', $sortDirection)
+                ->paginate($perPage);
         
-        // Return JSON response
+        // Return JSON response with pagination data
         return response()->json([
             'success' => true,
-            'data' => $tasks,
+            'data' => $tasks->items(),  // The actual data
+            'current_page' => $tasks->currentPage(),
+            'last_page' => $tasks->lastPage(),
+            'per_page' => $tasks->perPage(),
+            'total' => $tasks->total(),
         ]);
     }
-
+    
     public function store(Request $request)
     {
         try {
@@ -171,6 +199,25 @@ public function complete($id)
         'success' => true,
         'message' => 'Task marked as completed.',
         'data' => $task
+    ], 200);
+}
+public function show($id)
+{
+    // Find the task by ID
+    $task = Task::find($id);
+
+    // If the task does not exist, return an error response
+    if (!$task) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Task not found.',
+        ], 404);
+    }
+
+    // Return the task details
+    return response()->json([
+        'success' => true,
+        'data' => $task,
     ], 200);
 }
 }
