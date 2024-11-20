@@ -190,7 +190,7 @@ public function complete($id)
     ];
 
     Mail::send('mail', $data, function ($message) {
-        $message->to('abc@gmail.com', 'Task Management')
+        $message->to('abc@gmail.com', 'Task Management') //Here we can get the email from the user detail directly but i have hardocded a email
                 ->subject('Task Completed');
         $message->from('xyz@gmail.com', 'Manoo');
     });
