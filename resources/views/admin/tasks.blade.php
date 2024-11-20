@@ -83,7 +83,12 @@ $(document).ready(function () {
                 const taskTable = $("#userTable tbody");
                 taskTable.empty(); // Clear existing rows
                 response.data.forEach((task) => {
-                    const paymentStatus = task.is_paid ? "Paid" : `<button class="btn btn-warning btn-sm payNowBtn" data-id="${task.id}">Pay Now</button>`;
+                    const paymentStatus = task.is_paid
+                    ? "Paid"
+                    : `<button class="btn btn-warning btn-sm payNowBtn" 
+                               data-id="${task.id}" ${task.is_completed ? "" : "disabled"}>
+                           Pay Now
+                       </button>`;
                     taskTable.append(`
                         <tr>
                             <td>${task.id}</td>
@@ -94,8 +99,8 @@ $(document).ready(function () {
                             <td>${new Date(task.created_at).toLocaleDateString()}</td>
                             <td>${task.priority}</td>
                             <td>
-                                <input type="checkbox" role="switch" class="toggle-complete" data-on="Completed" 
-                                       data-off="Pending" data-id="${task.id}" ${task.is_completed ? 'checked' : ''}>
+                               <input type="checkbox" role="switch" class="toggle-complete" data-on="Completed" 
+data-off="Pending" data-id="${task.id}" ${task.is_completed ? 'checked' : ''} ${task.is_completed ? 'disabled' : ''}>
                             </td>
                             <td>${paymentStatus}</td>
                             <td>
@@ -159,7 +164,13 @@ $(document).ready(function () {
             },
             success: function (response) {
                 showAlert('Task status updated successfully.', 'success');
-                fetchTasks(currentPage);  // Refresh the tasks list
+                const payNowButton = $(`.payNowBtn[data-id='${taskId}']`);
+                if (completedStatus) {
+                    payNowButton.prop("disabled", false);
+                } else {
+                    payNowButton.prop("disabled", true);
+                }
+               // fetchTasks(currentPage);  // Refresh the tasks list
             },
             error: function (error) {
                 showAlert('Error updating task status. Please try again.', 'danger');

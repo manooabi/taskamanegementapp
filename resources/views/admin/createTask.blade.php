@@ -7,7 +7,7 @@
     <div class="card mt-4">
         <div class="card-header">
             <h4>Create Task</h4>
-            <a href="{{ url('admin/view-tasks') }}" class="btn btn-primary btn-sm float-end">View Tasks</a>
+            <a href="{{ url('/tasks') }}" class="btn btn-primary btn-sm float-end">Back to Tasks</a>
         </div>
         <div class="card-body">
             <form id="createTaskForm">
@@ -122,7 +122,7 @@
                 success: function (response) {
                     if (response.success) {
                         showAlert("Task created successfully.", "success");
-                        $("#createTaskForm")[0].reset(); // Reset form
+                        window.location.href = "{{ url('/tasks') }}";
                     } else {
                         showAlert("Error creating task. Please try again.", "danger");
                     }

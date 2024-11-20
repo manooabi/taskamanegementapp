@@ -7,7 +7,7 @@
     <div class="card mt-4">
         <div class="card-header">
             <h4>Edit Task</h4>
-            <a href="{{ url('admin/view-tasks') }}" class="btn btn-primary btn-sm float-end">View Tasks</a>
+            <a href="{{ url('/tasks') }}" class="btn btn-primary btn-sm float-end">Back to Tasks</a>
         </div>
         <div class="card-body">
             <form id="editTaskForm">

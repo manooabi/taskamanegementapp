@@ -56,16 +56,8 @@ Route::get('/edit-task/{id}', function ($id) {
     return view('admin.UpdateTask', ['task' => $task]);
 });
 
-// Route::post('/checkout', StripeController::class,'checkout');
-// Route::get('/success', StripeController::class,'success');
 
-//Route::get('/checkout', StripeController::class,'checkout')->name('checkout');
 Route::get('/checkout', [StripeController::class, 'checkout'])->name('checkout');
 Route::get('/success', [StripeController::class, 'success'])->name('success');
 
 Route::get('/admin/tasks', [StripeController::class, 'index'])->name('admin.tasks');
-//Route::get('/success', StripeController::class,'success');
-
-// Route::get('/checkout', function() {
-//     return view('checkout'); // You may want to create a checkout view if needed
-// });

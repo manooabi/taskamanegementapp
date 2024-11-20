@@ -64,3 +64,44 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+
+
+
+------------------------------------About this Appp--------------------------------------------
+## Task Management App
+This is a Task Management Application built using Laravel.
+
+## Features
+Backend: Developed using Laravel, providing a robust API for data handling.
+Frontend: Built using Blade templates. All interactions such as Add, Edit, and Update are implemented with JavaScript and AJAX, adhering to the given instructions. No traditional web forms are used.
+
+## Getting Started
+Clone the Project: Clone this repository to your local machine.
+Database Setup:
+Initialize the tables as per the models provided in the application.
+Create a .env file in the root directory and configure your database details.
+API for User Management:
+User addition is handled exclusively through API endpoints.
+
+## Application Functionality
+a.Task Management:
+    1.Add Task
+    2.Edit Task
+    3.Delete Task
+b.Task Details:
+    1.Field Behavior:
+        *.The fields Completed and Paid are disabled during Add/Edit actions. Tooltips are provided for user clarity.
+c.Payment Flow:
+    1.Payment can only be made after a task is marked as "Completed".
+    2.If a task is in "Pending" status, the payment button will be disabled and read-only.
+    3.Once the task is marked as "Completed" (completed = true):
+        3.1.The payment button becomes active.
+        3.2.After a successful payment, the "Pay Now" button changes to "Paid" status.
+d.Immutable Completed Tasks:
+    1.Once a task is marked as "Completed," it cannot be reverted. The "Completed" field becomes read-only and disabled.
+
+## Summary
+This application enforces a strict workflow for task management and payment processes, ensuring clarity and preventing data inconsistencies.
